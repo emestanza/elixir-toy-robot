@@ -23,6 +23,24 @@ defmodule ToyRobot.Robot do
     end
   end
 
+  @doc """
+  ## Examples
+  iex> alias ToyRobot.Robot
+  ToyRobot.Robot
+  iex> robot = %Robot{facing: :north}
+  %Robot{facing: :north}
+  iex> robot |> Robot.turn_left
+  %Robot{facing: :west}
+  """
+  def turn_left(%Robot{facing: facing}) do
+    case facing do
+      :north -> %Robot{facing: :west}
+      :east -> %Robot{facing: :north}
+      :south -> %Robot{facing: :east}
+      :west -> %Robot{facing: :south}
+    end
+  end
+
   defp move_east(robot) do
     %Robot{east: robot.east + 1}
   end
