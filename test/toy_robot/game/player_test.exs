@@ -24,8 +24,9 @@ defmodule ToyRobot.Game.PlayerTest do
     end
 
     test "shows the current position of the robot", %{player: player} do
-      :ok = Player.move(player)
-      assert Player.report(player) == %Robot{north: 1, east: 0, facing: :north}
+      Player.move(player)
+      robot = Player.report(player)
+      assert robot == %Robot{north: 1, east: 0, facing: :north}
     end
   end
 end
