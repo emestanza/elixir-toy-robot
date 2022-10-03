@@ -3,6 +3,10 @@ defmodule ToyRobot.Game.Player do
 
   alias ToyRobot.{Simulation, Table}
 
+  def start_link(robot: robot, name: name) do
+    GenServer.start_link(__MODULE__, robot, name: process_name(name))
+  end
+
   def start(position) do
     GenServer.start(__MODULE__, position)
   end
@@ -28,11 +32,15 @@ defmodule ToyRobot.Game.Player do
   end
 
   def handle_call(:report, _from, simulation) do
-    {:reply, simulation |> Simulation.report, simulation}
+    {:reply, simulation |> Simulation.report(), simulation}
   end
 
   def handle_cast(:move, simulation) do
     {:ok, new_simulation} = simulation |> Simulation.move()
     {:noreply, new_simulation}
+  end
+
+  def process_name(name) do
+    {:via, Registry, {ToyRobot.Game.PlayerRegistry, name}}
   end
 end
