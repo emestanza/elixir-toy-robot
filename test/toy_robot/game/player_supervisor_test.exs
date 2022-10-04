@@ -15,4 +15,20 @@ defmodule ToyRobot.Game.PlayerSupervisorTest do
     registry = Process.whereis(ToyRobot.Game.PlayerRegistry)
     assert registry
   end
+
+  test "moves a robot forward" do
+    robot = %Robot{north: 0, east: 0, facing: :north}
+    {:ok, _player} = PlayerSupervisor.start_child(robot, "Charlie")
+    PlayerSupervisor.move("Charlie")
+    %{north: north} = PlayerSupervisor.report("Charlie")
+    assert north == 1
+  end
+
+  test "reports a robot's location" do
+    robot = %Robot{north: 0, east: 0, facing: :north}
+    {:ok, _player} = PlayerSupervisor.start_child(robot, "Davros")
+    %{north: north} = PlayerSupervisor.report("Davros")
+
+    assert north == 0
+  end
 end

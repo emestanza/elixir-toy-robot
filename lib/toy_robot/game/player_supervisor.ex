@@ -18,4 +18,12 @@ defmodule ToyRobot.Game.PlayerSupervisor do
       {Player, [robot: robot, name: name]}
     )
   end
+
+  def move(name) do
+    name |> Player.process_name() |> Player.move()
+  end
+
+  def report(name) do
+    name |> Player.process_name() |> Player.report()
+  end
 end
